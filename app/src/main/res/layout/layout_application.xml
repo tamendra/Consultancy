@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingBottom="32dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#A82424"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvApplTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Sample Title"
+                android:textSize="34sp"
+                android:textStyle="normal|bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvApplDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="This section will contain details of job\nJob role\nresponsibilities\nsalary\nexperience\nSkills"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/tvApplTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvApplTitle" />
+
+
+            <ImageView
+                android:id="@+id/imgApplQualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription='"images"'
+                app:layout_constraintStart_toStartOf="@+id/tvApplDescription"
+                app:layout_constraintTop_toBottomOf="@+id/tvApplDescription"
+                app:srcCompat="@drawable/ic_qualification"
+                tools:srcCompat="@drawable/ic_qualification" />
+
+            <TextView
+                android:id="@+id/tvApplQualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Job qualification"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/imgApplQualification"
+                app:layout_constraintTop_toTopOf="@id/imgApplQualification" />
+
+            <ImageView
+                android:id="@+id/imgApplLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription='"images"'
+                app:layout_constraintStart_toStartOf="@+id/tvApplDescription"
+                app:layout_constraintTop_toBottomOf="@id/imgApplQualification"
+                app:srcCompat="@drawable/ic_location"
+                tools:srcCompat="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/tvApplLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Job Location"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imgApplLocation"
+                app:layout_constraintTop_toTopOf="@+id/imgApplLocation" />
+
+            <ImageView
+                android:id="@+id/imgApplSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription='"images"'
+                app:layout_constraintStart_toStartOf="@+id/imgApplLocation"
+                app:layout_constraintTop_toBottomOf="@id/imgApplLocation"
+                app:srcCompat="@drawable/ic_salary"
+                tools:srcCompat="@drawable/ic_salary" />
+
+            <TextView
+                android:id="@+id/tvApplSalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Salary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imgApplSalary"
+                app:layout_constraintTop_toTopOf="@+id/imgApplSalary" />
+
+            <ImageView
+                android:id="@+id/imgApplDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription='"images"'
+                app:layout_constraintStart_toStartOf="@+id/imgApplSalary"
+                app:layout_constraintTop_toBottomOf="@id/imgApplSalary"
+                app:srcCompat="@drawable/ic_date"
+                tools:srcCompat="@drawable/ic_date" />
+
+            <TextView
+                android:id="@+id/tvApplDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Date"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imgApplDate"
+                app:layout_constraintTop_toTopOf="@+id/imgApplDate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

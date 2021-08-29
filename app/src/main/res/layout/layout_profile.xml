@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgProfilePic"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_circle"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="Tamendra Kumar Sahu"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgProfilePic" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="user@gmail.com"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+            <TextView
+                android:id="@+id/tvUserContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="9999888776"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserEmail" />
+
+            <TextView
+                android:id="@+id/tvUserWhatsApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="6778889999"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserContact"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserContact" />
+
+            <TextView
+                android:id="@+id/tvUserGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="rather not to say"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserWhatsApp"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserWhatsApp" />
+
+            <TextView
+                android:id="@+id/tvUserDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="I'm electrician"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserGender"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserGender" />
+
+            <TextView
+                android:id="@+id/tvUserRoles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="Lineman, electrician"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserDescription"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_tv"
+                android:padding="4dp"
+                android:text="Hindi, English"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/tvUserRoles"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserRoles" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

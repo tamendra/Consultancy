@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mJobs"
+        android:icon="@drawable/ic_jobs"
+        android:title="Jobs"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mApplications"
+        android:icon="@drawable/ic_applications"
+        android:title="Applications"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mProfile"
+        android:icon="@drawable/ic_profile"
+        android:title="profile"
+        app:showAsAction="always" />
+</menu>
