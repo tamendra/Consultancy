@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,6 +12,7 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
+        android:text="tamendra"
         app:layout_constraintBottom_toTopOf="@+id/etUserName"
         app:layout_constraintEnd_toEndOf="@+id/etUserName"
         app:layout_constraintStart_toStartOf="@+id/etUserName" />
@@ -26,6 +25,7 @@
         android:ems="10"
         android:hint="userName"
         android:inputType="textPersonName"
+        android:text="tUserName"
         app:layout_constraintBottom_toTopOf="@+id/etEmailSignUp"
         app:layout_constraintEnd_toEndOf="@+id/etEmailSignUp"
         app:layout_constraintStart_toStartOf="@+id/etEmailSignUp" />
@@ -37,6 +37,7 @@
         android:ems="10"
         android:hint="email id"
         android:inputType="textEmailAddress"
+        android:text="Sahutamendra@gmail.com"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -51,6 +52,7 @@
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
+        android:text="Master27"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmailSignUp" />
@@ -63,6 +65,7 @@
         android:ems="10"
         android:hint="confirm password"
         android:inputType="textPassword"
+        android:text="Master27"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />

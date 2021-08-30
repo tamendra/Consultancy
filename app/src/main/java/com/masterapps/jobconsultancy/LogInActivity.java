@@ -53,15 +53,12 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         Handler handlerUserCheck = new Handler();
         handlerUserCheck.postDelayed(new Runnable()
+
         {
             @Override
             public void run() {
-                /**
-                 *
-                 *checking if user is logged in device previously
-                 */
 
-                 SharedPreferences sp = getApplicationContext().getSharedPreferences("tiripassa",MODE_PRIVATE);
+                 SharedPreferences sp = getApplicationContext().getSharedPreferences("com.masterapps.jobconsultancy",MODE_PRIVATE);
 
                  try{
 
@@ -128,8 +125,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 SimpleDateFormat sdf = new SimpleDateFormat(ch+""+"ssyyyy"+""+i+""+"dd");
                 String userId = sdf.format(cal.getTime());
 
-                Toast.makeText(getApplicationContext(),"Guest user welcome",Toast.LENGTH_SHORT).show();
-                //UserData user = new UserData(getApplicationContext(),"Noobie","noobie007",null,null,R.drawable.blue_token,0,0,userId,Boolean.TRUE);
+                Toast.makeText(getApplicationContext(),"Guest User Welcome",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LogInActivity.this,MainActivity.class));
                 finish();
                 break;
@@ -154,11 +150,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginUser(String email, String password) {
-
-        /**
-         * if no userdata saved in shared pref
-         *
-         */
 
         pbLogIn.setVisibility(View.VISIBLE);
 

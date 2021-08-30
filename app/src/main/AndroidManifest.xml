@@ -9,17 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobConsultancy">
-        <activity android:name=".JobApplyActivity"></activity>
+        <activity android:name=".EditProfileActivity"></activity>
 
         <receiver android:name=".models.MyNotePublisher" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".JobApplyActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".SignUpActivity" />
     </application>
 
 </manifest>

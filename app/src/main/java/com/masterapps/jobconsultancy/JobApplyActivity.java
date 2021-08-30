@@ -1,14 +1,15 @@
 package com.masterapps.jobconsultancy;
 
 import android.content.Intent;
-import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.masterapps.jobconsultancy.SampleData.JobList;
 import com.masterapps.jobconsultancy.models.Application;
@@ -21,6 +22,8 @@ public class JobApplyActivity extends AppCompatActivity {
 
     Job job;
     ProgressBar pbApply;
+
+    //AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,12 @@ public class JobApplyActivity extends AppCompatActivity {
 
         Handler handler = new Handler();
         pbApply.setVisibility(View.VISIBLE);
+
+
+       /* mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
 
         handler.postDelayed(new Runnable() {
             @Override

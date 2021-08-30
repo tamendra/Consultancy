@@ -18,14 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -47,7 +47,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     FirebaseAuth mAuth;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    //DatabaseReference reference;
+
+    FirebaseFirestore firestore;
+    CollectionReference collectionReference;
     FirebaseStorage storage;
     StorageReference storageReference;
 
@@ -88,9 +91,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         //firebase
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        firestore = FirebaseFirestore.getInstance();
+        collectionReference = firestore.collection("Users");
+
     }
 
     @Override
@@ -132,7 +139,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 ivUSerIcon.setImageBitmap(bitmap);
-                //uploadImage();
             }
             catch (IOException e)
             {
@@ -142,37 +148,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void uploadImage() {
+    private void uploadImage(FirebaseUser firebaseUser) {
 
-        if(filePath != null)
+        if(filePath!= null)
         {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString())
+                    ;
             ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    downloadUrl = task.getResult();
-                                    Log.d("Loginfo", "download url is "+ downloadUrl.toString());
-                                    reference.child("sUserIcon").setValue(downloadUrl.toString());
-
-                                }
-                            });
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed to upload image "+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+                            startActivity(intent);
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -182,22 +176,40 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
-                    }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    })
+                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            downloadUrl = task.getResult().getUploadSessionUri();
+                            Log.d("Loginfo", "download url is "+ downloadUrl.getPath());
 
+                            collectionReference.document(firebaseUser.getUid()).update("sUserIcon",downloadUrl.toString())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isComplete()){
 
-                }
+                                                progressDialog.dismiss();
+                                                Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+                                                startActivity(intent);
+                                            }else{
+                                                Toast.makeText(getApplicationContext(),"error uploading image",Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                        }
             });
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"error uploading image",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+            startActivity(intent);
         }
     }
 
     private void credentialValidationAndSignUp() {
-        /**
-         * checking credential are valid or not
-         * if valid create user
-         * else validate credentials
-         */
+
 
         if(etEmail.getText().toString().isEmpty()){
             etEmail.setError("can't be empty");
@@ -229,12 +241,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                     if(task.isComplete()){
-                        if(task.getResult().getSignInMethods().size()==0){
-                            createUser(etEmail.getText().toString(),etPassword.getText().toString());
-                        }
-                        else{
-                            etEmail.setError("email already registerd with us");
-                            Toast.makeText(getApplicationContext(), "email already exist", Toast.LENGTH_SHORT).show();
+                        try {
+                            if (task.getResult().getSignInMethods().isEmpty()) {
+
+                                Log.d(LOG_TAG,"user check no emails registered");
+                                createUser(etEmail.getText().toString(), etPassword.getText().toString());
+                            } else {
+                                etEmail.setError("email already exist");
+                                Toast.makeText(getApplicationContext(), "email already exist", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.d(LOG_TAG,"error in user check "+e.getMessage());
                         }
                     }
                 }
@@ -244,20 +262,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private boolean userNameAvail() {
-        //todo checkUserNameAvailability
-        /**
-         * checkUserNameAvailability
-         *
-         */
         return Boolean.TRUE;
     }
 
     private void createUser(final String email, String password) {
-
-        /**
-         * Registering User
-         *
-         */
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -266,8 +274,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG,"registration successful");
-
-                            //todo update rest of the user creddential here
 
                             try {
                                 Log.d(LOG_TAG,"user credential");
@@ -278,8 +284,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 Log.d("signUp","Error data upload "+e.getMessage());
                             }
 
-                            Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
-                            startActivity(intent);
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Registration failed! Please try again later", Toast.LENGTH_SHORT).show();
@@ -291,10 +295,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void userCredential(FirebaseUser firebaseUser) {
 
-        /**
-         * maintaining User Database
-         *
-         */
 
         Log.d(LOG_TAG,"user Credential upload started ");
 
@@ -307,17 +307,40 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
          */
 
         try{
-            User user = new User(etName.getText().toString(),etUserName.getText().toString(),etEmail.getText().toString(),"0","0","0");
-            reference = database.getReference(firebaseUser.getUid());
+            User user = new User(etEmail.getText().toString(),
+                    "","",null, null,"","","",
+                    etName.getText().toString(),"","");
+
+            firestore.collection("Users").document(firebaseUser.getUid())
+                    .set(user)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isComplete()){
+
+                                Log.d(LOG_TAG,"object user successful "+firebaseUser.getUid());
+                                uploadImage(firebaseUser);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(),"image upload cancelled ",Toast.LENGTH_LONG).show();
+                        }
+                    });
+            /*
+            reference = database.getReference("Users").getDatabase().getReference(firebaseUser.getUid());
             reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isComplete()){
-                        Log.d(LOG_TAG,"object user successful");
-                        uploadImage();
                     }
                 }
             });
+             */
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(LOG_TAG,"object user failed "+e.getMessage().toString());

@@ -34,11 +34,9 @@
 
         android:id="@+id/main_bottom_nav"
         android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        />
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
