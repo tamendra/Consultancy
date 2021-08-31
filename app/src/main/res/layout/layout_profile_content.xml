@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            style="@style/headerText"
+            android:layout_marginBottom="20dp"
+            android:text="Profile Info" />
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+            <ImageView
+                android:id="@+id/nameImageView"
+                style="@style/profileDetailsImage"
+                android:src="@drawable/ic_name" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                style="@style/profileDetailsTextMain"
+                android:layout_toRightOf="@id/nameImageView"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/tvUserWhatsApp"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/nameImageView"
+                android:text="Something" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/mobileImageView"
+                android:src="@drawable/ic_mobile"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Mobile"
+                android:layout_toRightOf="@id/mobileImageView"
+                style="@style/profileDetailsTextMain"/>
+
+            <TextView
+                android:id="@+id/tvUserContact"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/mobileImageView"
+                android:text="+91-8129999999" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/emailImageView"
+                android:src="@drawable/ic_email"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Email"
+                android:layout_toRightOf="@id/emailImageView"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/emailImageView"
+                android:text="developer@appsnipp.com" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/addressImageView"
+                android:src="@drawable/ic_address"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="Address"
+                android:layout_toRightOf="@id/addressImageView"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/addressImageView"
+                android:text="Avenue 2nd Street NW SY." />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/dobImageView"
+                android:src="@drawable/ic_dob"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                android:text="D.O.B"
+                android:layout_toRightOf="@id/dobImageView"
+                style="@style/profileDetailsTextMain" />
+
+            <TextView
+                android:id="@+id/tvDOB"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/dobImageView"
+                android:text="12-05-1990" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/imgGender"
+                app:srcCompat="@drawable/ic_gender"
+                style="@style/profileDetailsImage" />
+
+            <TextView
+                style="@style/profileDetailsTextMain"
+                android:layout_toRightOf="@id/imgGender"
+                android:text="Gender" />
+
+            <TextView
+                android:id="@+id/tvUserGender"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/imgGender"
+                android:text="Male/Female/Others" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+
+            <ImageView
+                android:id="@+id/imgLanguages"
+                style="@style/profileDetailsImage"
+                app:srcCompat="@drawable/ic_language"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                style="@style/profileDetailsTextMain"
+                android:layout_toRightOf="@id/imgLanguages"
+                android:text="Languages" />
+
+            <TextView
+                android:id="@+id/tvLanguages"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/imgLanguages"
+                android:text="Hindi, English" />
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/profileDetailsLayout">
+            <ImageView
+                android:id="@+id/imgQualification"
+                app:srcCompat="@drawable/ic_language"
+                style="@style/profileDetailsImage"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                style="@style/profileDetailsTextMain"
+                android:layout_toRightOf="@id/imgQualification"
+                android:text="Highest Qualification" />
+
+            <TextView
+                android:id="@+id/tvQualification"
+                style="@style/profileDetailsMiniText"
+                android:layout_toRightOf="@id/imgQualification"
+                android:text="Highest Qualification" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <View style="@style/proifleDetailsView" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="This section will contain details of job\nJob role\nresponsibilities\nsalary\nexperience\nSkills"
+                android:text="This section will contain details of jobAd\nJob role\nresponsibilities\nsalary\nexperience\nSkills"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/tvJobTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvJobTitle" />

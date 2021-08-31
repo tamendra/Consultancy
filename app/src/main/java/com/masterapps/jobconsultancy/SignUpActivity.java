@@ -30,7 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.masterapps.jobconsultancy.models.User;
+import com.masterapps.jobconsultancy.models.UserDetails;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    EditText etEmail,etPassword, etUserName,etName, etPassConfirm;
+    EditText etEmail,etPassword, etUserDescription,etName, etPassConfirm;
     Button btSignUp, btLoginDirect;
     ImageView ivUSerIcon;
 
@@ -81,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         etPassword = findViewById(R.id.etPassword);
         etPassConfirm = findViewById(R.id.etPassConfirm);
         etName = findViewById(R.id.etName);
-        etUserName = findViewById(R.id.etUserName);
+        etUserDescription = findViewById(R.id.etUserName);
         ivUSerIcon = findViewById(R.id.imgUserIcon);
 
         btSignUp = findViewById(R.id.btSignUp);
@@ -226,12 +226,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         else if(etName.getText().toString().isEmpty()){
             etName.setError("can't be empty");
         }
-        else if(etUserName.getText().toString().isEmpty()){
-            etUserName.setError("can't be empty");
+        else if(etUserDescription.getText().toString().isEmpty()){
+            etUserDescription.setError("can't be empty");
         }
         else if(!userNameAvail()){
 
-            etUserName.setError("userName not available");
+            etUserDescription.setError("can't be empty");
 
         }
         else{
@@ -244,7 +244,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         try {
                             if (task.getResult().getSignInMethods().isEmpty()) {
 
-                                Log.d(LOG_TAG,"user check no emails registered");
+                                Log.d(LOG_TAG,"userDetails check no emails registered");
                                 createUser(etEmail.getText().toString(), etPassword.getText().toString());
                             } else {
                                 etEmail.setError("email already exist");
@@ -252,7 +252,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Log.d(LOG_TAG,"error in user check "+e.getMessage());
+                            Log.d(LOG_TAG,"error in userDetails check "+e.getMessage());
                         }
                     }
                 }
@@ -276,7 +276,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             Log.d(LOG_TAG,"registration successful");
 
                             try {
-                                Log.d(LOG_TAG,"user credential");
+                                Log.d(LOG_TAG,"userDetails credential");
                                 userCredential(task.getResult().getUser());
 
                             } catch (Exception e) {
@@ -295,30 +295,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void userCredential(FirebaseUser firebaseUser) {
 
-
-        Log.d(LOG_TAG,"user Credential upload started ");
-
-        //todo instead of uploading every single string try object user
-
-        /**
-         * trying with object User
-         * this code works
-         *
-         */
-
         try{
-            User user = new User(etEmail.getText().toString(),
-                    "","",null, null,"","","",
-                    etName.getText().toString(),"","");
+            UserDetails userDetails = new UserDetails(etName.getText().toString(),etEmail.getText().toString(),"",
+                    "","","","","",firebaseUser.getUid(),new ArrayList<>(10),
+                    new ArrayList<>(10),new ArrayList<>(10),new ArrayList<>(10));
 
             firestore.collection("Users").document(firebaseUser.getUid())
-                    .set(user)
+                    .set(userDetails)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isComplete()){
 
-                                Log.d(LOG_TAG,"object user successful "+firebaseUser.getUid());
+                                Log.d(LOG_TAG,"object userDetails successful "+firebaseUser.getUid());
                                 uploadImage(firebaseUser);
                             }
                         }
@@ -329,62 +318,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(getApplicationContext(),"image upload cancelled ",Toast.LENGTH_LONG).show();
                         }
                     });
-            /*
-            reference = database.getReference("Users").getDatabase().getReference(firebaseUser.getUid());
-            reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isComplete()){
-                    }
-                }
-            });
-             */
+
 
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(LOG_TAG,"object user failed "+e.getMessage().toString());
+            Log.d(LOG_TAG,"object userDetails failed "+e.getMessage().toString());
         }
-
-/*
-        try{
-
-            reference = database.getReference(firebaseUser.getUid());
-
-            try{
-                reference.child("name").setValue(etName.getText().toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.d(LOG_TAG,"error in uploading name "+e.getMessage());
-            }
-
-            reference.child("userName").setValue(etUserName.getText().toString());
-            reference.child("exp").setValue(0);
-            reference.child("kauri").setValue(0);
-            reference.child("userIcon").setValue(0);
-
-            reference.child("email").setValue(firebaseUser.getEmail())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "data uploaded", Toast.LENGTH_LONG).show();
-                                Log.d(LOG_TAG,"data upload successful");
-                            }else {
-                                Toast.makeText(getApplicationContext(), "data not uploaded", Toast.LENGTH_LONG).show();
-                                Log.d(LOG_TAG,"data not uploaded");
-                            }
-                        }
-                    });
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            Log.d(LOG_TAG,"error uploading data "+e.getMessage());
-
-        }
-
- */
-
 
     }
 

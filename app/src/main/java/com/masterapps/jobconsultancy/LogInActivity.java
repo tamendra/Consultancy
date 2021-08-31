@@ -125,7 +125,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 SimpleDateFormat sdf = new SimpleDateFormat(ch+""+"ssyyyy"+""+i+""+"dd");
                 String userId = sdf.format(cal.getTime());
 
-                Toast.makeText(getApplicationContext(),"Guest User Welcome",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Guest UserDetails Welcome",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LogInActivity.this,MainActivity.class));
                 finish();
                 break;
@@ -162,7 +162,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
 
 
-                            Log.d(LOG_TAG,"User authenticated");
+                            Log.d(LOG_TAG,"UserDetails authenticated");
 
                             Toast.makeText(getApplicationContext(), "Welcome Back Username", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(LogInActivity.this,MainActivity.class));
@@ -171,7 +171,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
                             Toast.makeText(getApplicationContext(), "email or password is incorrect", Toast.LENGTH_LONG).show();
                             pbLogIn.setVisibility(View.INVISIBLE);
-                            Log.d(LOG_TAG,"user couldn't be authenticated");
+                            Log.d(LOG_TAG,"userDetails couldn't be authenticated");
 
 
                         }

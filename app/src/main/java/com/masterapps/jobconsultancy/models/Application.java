@@ -2,28 +2,14 @@ package com.masterapps.jobconsultancy.models;
 
 public class Application extends Object{
 
-    String sApplicationId, sJobId, sApplicantId, sDateApplied;
-    int sStatus;
+    String sApplicationId, sJobId, sApplicantId, sDateApplied, sStatus;
 
-    public Application(String sJobId, String sApplicantId) {
+    public Application(String sApplicationId, String sJobId, String sApplicantId, String sDateApplied, String sStatus) {
+        this.sApplicationId = sApplicationId;
         this.sJobId = sJobId;
-        this.sApplicationId = createApplicationID();
-        this.sDateApplied = createTimeApplied();
-        this.sStatus = 0;
         this.sApplicantId = sApplicantId;
-        // 0 for open, 1 for closed, 2 for process ongoing, 3 selected , 4 saved but not Applied
-    }
-
-    public int getsStatus() {
-        return sStatus;
-    }
-
-    private String createTimeApplied() {
-        return "05/09/2021 09:30";
-    }
-
-    private String createApplicationID() {
-        return "ApplicationId";
+        this.sDateApplied = sDateApplied;
+        this.sStatus = sStatus;
     }
 
     public String getsApplicationId() {
@@ -42,11 +28,27 @@ public class Application extends Object{
         this.sJobId = sJobId;
     }
 
+    public String getsApplicantId() {
+        return sApplicantId;
+    }
+
+    public void setsApplicantId(String sApplicantId) {
+        this.sApplicantId = sApplicantId;
+    }
+
     public String getsDateApplied() {
         return sDateApplied;
     }
 
     public void setsDateApplied(String sDateApplied) {
         this.sDateApplied = sDateApplied;
+    }
+
+    public String getsStatus() {
+        return sStatus;
+    }
+
+    public void setsStatus(String sStatus) {
+        this.sStatus = sStatus;
     }
 }

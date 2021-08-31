@@ -1,4 +1,4 @@
-package com.masterapps.jobconsultancy.models;
+package com.masterapps.jobconsultancy.helpers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

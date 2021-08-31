@@ -1,12 +1,13 @@
 package com.masterapps.jobconsultancy.adapters;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.masterapps.jobconsultancy.R;
 import com.masterapps.jobconsultancy.models.Application;
@@ -39,7 +40,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
     @Override
     public int getItemCount() {
-        //return job.size();
+        //return jobAd.size();
         return applications.size();
     }
 

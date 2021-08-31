@@ -1,4 +1,4 @@
-package com.masterapps.jobconsultancy.models;
+package com.masterapps.jobconsultancy.helpers;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

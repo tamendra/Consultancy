@@ -13,11 +13,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemAppl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Applications" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemSaved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SavedJobs" />
@@ -38,6 +40,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvApplications"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"

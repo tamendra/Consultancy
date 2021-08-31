@@ -9,21 +9,26 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.masterapps.jobconsultancy.SampleData.JobList;
-import com.masterapps.jobconsultancy.models.Application;
-import com.masterapps.jobconsultancy.models.Job;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.masterapps.jobconsultancy.models.JobAd;
 
 public class JobApplyActivity extends AppCompatActivity {
 
     TextView tvTitle, tvDetail, tvQualification, tvLocation, tvSalary, tvDate;
-    Button btSave, btApply;
+    Button btApply;
+    String jobId;
 
-    Job job;
+    JobAd jobAd;
     ProgressBar pbApply;
 
-    //AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,8 @@ public class JobApplyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_apply);
 
         Intent intent = new Intent();
-        intent.getStringExtra("JOB_ID");
+        jobId = intent.getStringExtra("JOB_ID");
+
 
         tvTitle = findViewById(R.id.tvJobTitle);
         tvDetail = findViewById(R.id.tvJobDescription);
@@ -45,24 +51,50 @@ public class JobApplyActivity extends AppCompatActivity {
         Handler handler = new Handler();
         pbApply.setVisibility(View.VISIBLE);
 
-
-       /* mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        */
-
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO Firebase load job data from jobId
 
-                job = JobList.myJobMLM();
+                jobAd = new JobAd();
+                FirebaseFirestore.getInstance().collection("Jobs").document(jobId)
+                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isComplete()){
+                            jobAd = (JobAd) task.getResult().toObject(JobAd.class);
+                            for(String s : jobAd.getsApplicant()){
+                                if(s.equals("applied"+FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                    Toast.makeText(getApplicationContext(),"Already applied",Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(),MyApplicationFragment.class));
+                                    finish();
+                                }
+                            }
+                            if(updateJobData(jobAd)){
+                                pbApply.setVisibility(View.INVISIBLE);
+                                btApply.setClickable(true);
+                            }else if(updateJobData(jobAd)){
+                                pbApply.setVisibility(View.INVISIBLE);
+                                btApply.setClickable(true);
+                            }else {
+                                Toast.makeText(getApplicationContext(),"try again",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
 
-                if(updateJobData(job)){
+                        }else {
+                            Toast.makeText(getApplicationContext(),"try again",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Error occured "+e.getMessage()+ " try again",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
 
-                    pbApply.setVisibility(View.INVISIBLE);
-                    btApply.setClickable(true);
-                }
             }
         },0);
 
@@ -72,35 +104,51 @@ public class JobApplyActivity extends AppCompatActivity {
                 btApply.setClickable(false);
                 pbApply.setVisibility(View.VISIBLE);
 
+
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //TODO Firebase add jobId to User's applied jobs section
 
-                        Application application = new Application(job.getsJobId(),"thisUser07");
+                        FirebaseFirestore.getInstance().collection("Users")
+                                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .collection("Application")
+                                .document("apply"+jobId).set(jobId)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isComplete()){
+                                            FirebaseFirestore.getInstance().collection("Jobs")
+                                                    .document(jobId)
+                                                    .collection("sApplicant")
+                                                    .document("applied"+FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                    .set(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        }
+                                    }
+                                });
 
-                        Toast.makeText(v.getContext(),"You have successfully Applied for this job", Toast.LENGTH_SHORT).show();
-                        finish();
+
                     }
-                },3000);
+                },1000);
             }
         });
 
     }
 
-    private Boolean updateJobData(Job job) {
+    private Boolean updateJobData(JobAd jobAd) {
 
-        if(job!=null){
-            tvTitle.setText(job.getsTitle().toString());
-            tvDetail.setText(job.getsDescription().toString());
-            tvDate.setText(job.getsDateTime().toString());
-            tvLocation.setText(job.getsJobLocatoin().toString());
-            tvQualification.setText(job.getsQualification().toString());
-            tvSalary.setText(job.getsSalary()+"");
+        if(jobAd !=null){
+            tvTitle.setText(jobAd.getsTitle());
+            tvDetail.setText(jobAd.getsDescription());
+            tvDate.setText(jobAd.getsDateTime());
+            tvLocation.setText(jobAd.getsJobLocation().toString());
+            tvQualification.setText(jobAd.getsQualification());
+            tvSalary.setText(jobAd.getsSalary()+"");
+            return true;
+        }else {
+            return false;
         }
 
-        return true;
     }
 
 }

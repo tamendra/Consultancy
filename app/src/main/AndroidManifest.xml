@@ -11,7 +11,7 @@
         android:theme="@style/Theme.JobConsultancy">
         <activity android:name=".EditProfileActivity"></activity>
 
-        <receiver android:name=".models.MyNotePublisher" />
+        <receiver android:name=".helpers.MyNotePublisher" />
 
         <activity android:name=".JobApplyActivity" />
         <activity android:name=".MainActivity" />

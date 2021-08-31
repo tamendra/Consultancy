@@ -2,6 +2,7 @@ package com.masterapps.jobconsultancy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.masterapps.jobconsultancy.models.User;
+import com.masterapps.jobconsultancy.models.UserDetails;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     FirebaseUser firebaseUser;
     FirebaseFirestore firestore;
-    User user;
+    UserDetails userDetails;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
 
-        user = new User();
+        userDetails = new UserDetails();
 
         if(firebaseUser!= null) {
             firestore.collection("Users").document(firebaseUser.getUid())
@@ -52,8 +53,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if(task.isComplete()){
-                                user = task.getResult().toObject(User.class);
-
+                                userDetails = task.getResult().toObject(UserDetails.class);
+                                Log.d("signup log","userDetails name "+ userDetails.getName());
+                                loadUser();
                             }
                         }
                     })
@@ -64,8 +66,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         }
                     });
 
+
             return inflater.inflate(R.layout.fragment_profile, container, false);
-        }else if(user.isSharedPref(container.getContext())){
+        }else if(userDetails.isSharedPref(container.getContext())){
             return inflater.inflate(R.layout.fragment_profile, container, false);
         }
         else {
@@ -78,15 +81,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private Boolean loadUser() {
 
-        tvName.setText(user.getEmailId());
-        tvGender.setText(user.getGender());
-        tvWhatsapp.setText(user.getWhatsappNo());
-        tvExperience.setText(user.getsExp());
-        tvContaact.setText(user.getContact());
-        tvLanguages.setText(listToStrong(user.getLanguages()));
-        tvEmail.setText(user.getEmailId());
-        tvDescription.setText(user.getDescription());
-        tvSalary.setText(user.getCurrentSalary());
+        tvName.setText(userDetails.getName());
+        tvGender.setText(userDetails.getGender());
+        tvWhatsapp.setText(userDetails.getWhatsappNo());
+        //tvExperience.setText(userDetails.getsExp());
+        tvContaact.setText(userDetails.getContact());
+        tvLanguages.setText(listToStrong(userDetails.getLanguages()));
+        tvEmail.setText(userDetails.getEmailId());
+        tvDescription.setText(userDetails.getDescription());
+      //  tvSalary.setText(userDetails.getCurrentSalary()+"");
 
 
         return true;
@@ -114,9 +117,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
 
 
-
+            Log.d("signup log","userDetails name "+ userDetails.getName());
             InitializeUI(view);
-            loadUser();
+            //loadUser();
             fabEdit.setOnClickListener(this);
         }else {
             Button btLogin = view.findViewById(R.id.btLogin);
@@ -130,12 +133,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         fabEdit = view.findViewById(R.id.fabEdit);
 
-        tvName = view.findViewById(R.id.tvUserName);
+        tvName = view.findViewById(R.id.tvUserWhatsApp);
         tvDescription = view.findViewById(R.id.tvUserDescription);
         tvLanguages= view.findViewById(R.id.tvLanguages);
         tvEmail = view.findViewById(R.id.tvUserEmail);
         tvContaact = view.findViewById(R.id.tvUserContact);
-        tvExperience = view.findViewById(R.id.tvUserExp);
+        //tvExperience = view.findViewById(R.id.tvUserExp);
 
         tvWhatsapp = view.findViewById(R.id.tvUserWhatsApp);
         tvGender = view.findViewById(R.id.tvUserGender);

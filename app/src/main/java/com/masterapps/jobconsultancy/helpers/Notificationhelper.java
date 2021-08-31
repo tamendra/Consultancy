@@ -1,9 +1,10 @@
-package com.masterapps.jobconsultancy.models;
+package com.masterapps.jobconsultancy.helpers;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+
 import androidx.core.app.NotificationCompat;
 
 import com.masterapps.jobconsultancy.R;

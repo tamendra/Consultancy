@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Job Consultancy</string>
     <string name="banner_application_ad_id">ca-app-pub-5249972319214890~9483009980</string>
+
+    <string name="title_activity_profile">Profile</string>
+    <string name="action_settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
